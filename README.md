@@ -6,6 +6,7 @@
     As blog_admin Project, I'm 2nd. I wish I could have two point of improvement.   
     1.clearer and more submission records   
     2.clearer learning notes
+    ps:The display Interface refer to https://github.com/bailicangdu/vue2-manage
 ```
 ## Project setup
 ```
