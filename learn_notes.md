@@ -6,3 +6,8 @@
 vue creat project-name  #create a project
 in next pick, as a beginner I choose the `default` pick.
 ```
+
+## plugins
+```
+element-ui,router,vuex
+```
