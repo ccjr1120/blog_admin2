@@ -9,5 +9,8 @@ in next pick, as a beginner I choose the `default` pick.
 
 ## plugins
 ```
-element-ui,router,vuex
+vue add element-ui
+vue add router
+vue add vuex
+npm install -D less-loader less
 ```
