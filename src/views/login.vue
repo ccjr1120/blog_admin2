@@ -9,10 +9,10 @@
           <el-input v-model="username" placeholder="用户名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="password" placeholder="密码"></el-input>
+          <el-input v-model="password"  placeholder="密码" show-password></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit_btn">登录</el-button>
+          <el-button type="primary" @click="submitLoginForm" class="submit_btn">登录</el-button>
         </el-form-item>
       </el-form>
     </section>
@@ -26,6 +26,19 @@ export default {
       username: "",
       password: ""
     };
+  },
+  created(){
+    if(this.$store.state.isLogin){
+        this.$router.push('/manage')
+    }
+  },
+  methods:{
+    submitLoginForm:function(){
+      if(this.username == "admin" && this.password == "admin"){
+        this.$store.commit("login")
+        this.$router.push('/manage')
+      }
+    }
   }
 };
 </script>
