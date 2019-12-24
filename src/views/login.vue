@@ -4,15 +4,15 @@
       <div class="manage_tip">
         <p>博客后台管理系统</p>
       </div>
-      <el-form>
-        <el-form-item>
-          <el-input v-model="username" placeholder="用户名"></el-input>
+      <el-form :model="loginForm" :rules="rules" ref="loginForm" class="demo-ruleForm">
+        <el-form-item prop="username">
+          <el-input v-model="loginForm.username" placeholder="用户名" maxlength="8" show-word-limit></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input v-model="loginForm.password" placeholder="密码" show-password maxlength="16"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="password"  placeholder="密码" show-password></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitLoginForm" class="submit_btn">登录</el-button>
+          <el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登录</el-button>
         </el-form-item>
       </el-form>
     </section>
@@ -23,21 +23,53 @@
 export default {
   data() {
     return {
-      username: "",
-      password: ""
+      loginForm: {
+        username: "",
+        password: ""
+      },
+      rules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { min: 2, max: 8, message: "用户名不能小于两个字符", trigger: "blur" }
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          {
+            min: 2,
+            max: 16,
+            message: "密码不能小于两个字符",
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
-  created(){
-    if(this.$store.state.isLogin){
-        this.$router.push('/manage')
+  created() {
+    if (this.$store.state.isLogin) {
+      this.$router.push("/manage");
     }
   },
-  methods:{
-    submitLoginForm:function(){
-      if(this.username == "admin" && this.password == "admin"){
-        this.$store.commit("login")
-        this.$router.push('/manage')
-      }
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          var username = this.loginForm.username;
+          var password = this.loginForm.password;
+          if (username == "admin" && password == "admin") {
+            this.$store.commit("login");
+            this.$router.push("/manage");
+            this.$message({
+              message: "登录成功",
+              type: "success"
+            });
+          } else {
+            this.$message.error("用户名或密码错误");
+          }
+        } else {
+          window.console.log("error submit!!");
+          return false;
+        }
+      });
     }
   }
 };
@@ -59,8 +91,8 @@ export default {
   }
 }
 .form_contianer {
-  .wh(320px, 210px);
-  .ctp(320px, 210px);
+  .wh(320px, 170px);
+  .ctp(380px, 210px);
   padding: 25px;
   border-radius: 5px;
   text-align: center;
