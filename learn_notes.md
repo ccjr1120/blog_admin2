@@ -19,13 +19,37 @@ npm install -D less-loader less
 ```
 Go to router/index.js
 Build the router path
-ecample: const routes = [{
+example: const routes = [{
     path: '/',
     name: 'login',
     component: ()=>import('../views/login.vue')
   }]
 
 this.$router.push('/url') //Jump view in the script
+```
+## Navigation Guards(in router)
+```
+Through the navigation guards,the app can judge whether a user can access a page according to the value in vuex or other things.
+
+Example in the this app:
+//Import component in Vuex
+import store from '../store/index'
+//Add the code for the every item in route list.
+meta: {requiresAuth: false}
+//Add function for router.
+router.beforeEach((route, redirect, next) => {
+  if (route.matched.some(r => r.meta.requiresAuth) && !store.state.isLogin) {
+    next({
+      path: '/',
+      query: {
+        redirect: route.fullPath
+      }
+    })
+  } else {
+    next()
+  }
+})
+ps: The navigtion guards hava other functions.In this,the app jsut only use the beforeEach function.
 
 ```
 
