@@ -8,29 +8,40 @@ const login = () => import('../views/login.vue');
 const manage = () => import('../views/manage.vue')
 
 const routes = [{
-    path: ('/'),
-    name: 'index',
-    component: login,
-    meta: {
-      requiresAuth: false
-    }
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: login,
-    meta: {
-      requiresAuth: false
-    }
-  },
-  {
-    path: '/manage',
-    name: 'manage',
-    component: manage,
-    meta: {
-      requiresAuth: true
-    }
+  path: ('/'),
+  name: 'index',
+  component: login,
+  meta: {
+    requiresAuth: false
   }
+},
+{
+  path: '/login',
+  name: 'login',
+  component: login,
+  meta: {
+    requiresAuth: false
+  }
+},
+{
+  path: '/manage',
+  name: 'manage',
+  component: manage,
+  meta: {
+    requiresAuth: true
+  },
+  children: [
+    {
+      path: '/blogs'
+    },
+    {
+      path: '/comments'
+    },
+    {
+      path: '/newBlog'
+    }
+  ]
+}
 ]
 
 const router = new VueRouter({

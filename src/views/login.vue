@@ -44,7 +44,7 @@ export default {
       }
     };
   },
-  created() {
+ created(){
     if (this.$store.state.isLogin) {
       this.$router.push("/manage");
     }
