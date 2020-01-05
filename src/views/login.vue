@@ -46,7 +46,7 @@ export default {
   },
  created(){
     if (this.$store.state.isLogin) {
-      this.$router.push("/manage");
+      this.$router.push("/blogs");
     }
   },
   methods: {

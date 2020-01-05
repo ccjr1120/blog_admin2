@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const login = () => import('../views/login.vue');
 const manage = () => import('../views/manage.vue')
-
+const blogs = () => import('../views/blogs.vue')
 const routes = [{
   path: ('/'),
   name: 'index',
@@ -32,7 +32,8 @@ const routes = [{
   },
   children: [
     {
-      path: '/blogs'
+      path: '/blogs',
+      component: blogs
     },
     {
       path: '/comments'
