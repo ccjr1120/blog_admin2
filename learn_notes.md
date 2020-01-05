@@ -51,6 +51,22 @@ router.beforeEach((route, redirect, next) => {
 })
 ps: The navigtion guards hava other functions.In this,the app jsut only use the beforeEach function.
 
+Nested Router
+example:  
+  {
+  path: '/manage',
+  name: 'manage',
+  component: manage,
+  meta: {
+    requiresAuth: true
+  },
+  children: [
+    {
+      path: '/blogs'
+    }
+  ]
+  }
+Using nested router to make nested view more convenient
 ```
 
 ## vuex
