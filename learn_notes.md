@@ -75,4 +75,6 @@ example: export default new Vuex.Store({
 
 this.$store.state.isLogin //Get the value in state in the script
 this.$store.commit("login") //Execute the function in the script to change the value in state.
+
+Refresh will lose data in vuex
 ```
