@@ -13,6 +13,7 @@ vue add element-ui
 vue add router
 vue add vuex
 npm install -D less-loader less
+npm install mavon-editor --save
 ```
 
 ## router
@@ -93,4 +94,19 @@ this.$store.state.isLogin //Get the value in state in the script
 this.$store.commit("login") //Execute the function in the script to change the value in state.
 
 Refresh will lose data in vuex
+```
+
+## mavon-editor
+```
+ It is a markdown editor.
+ Use It:
+Go to the main.js in the root directory And add
+  import mavonEditor from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
+  Vue.use(mavonEditor)
+Then you can to use it in the views.
+Just only add this code in the view:
+    <div class="mavonEditor">
+      <mavon-editor v-model="value"/>
+    </div>
 ```
