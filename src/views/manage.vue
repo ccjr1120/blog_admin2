@@ -10,6 +10,7 @@
             text-color="#fff"
             active-text-color="#ffd04b"
             router
+            @select="selectRouter"
           >
             <el-menu-item index="/manage">
               <i class="el-icon-menu"></i>
@@ -39,7 +40,7 @@
         </div>
       </el-header>
       <el-main>
-        <router-view/>
+        <router-view />
       </el-main>
     </el-container>
   </el-container>
@@ -55,11 +56,16 @@ export default {
     };
   },
   methods: {
-    handleOpen(key, keyPath) {
-      window.console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      window.console.log(key, keyPath);
+    selectRouter(key) {
+      if (key === "/manage") {
+        this.currPage = "首页";
+      } else if (key === "/blogs") {
+        this.currPage = "博客列表";
+      } else if (key === "/comments") {
+        this.currPage = "评论列表";
+      } else if (key === "/newBlog") {
+        this.currPage = "新建博客";
+      }
     }
   }
 };

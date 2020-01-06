@@ -7,6 +7,8 @@ Vue.use(VueRouter)
 const login = () => import('../views/login.vue');
 const manage = () => import('../views/manage.vue')
 const blogs = () => import('../views/blogs.vue')
+const comments = () => import('../views/comments.vue')
+const editBlog = () => import("../views/editBlog.vue")
 const routes = [{
   path: ('/'),
   name: 'index',
@@ -36,10 +38,12 @@ const routes = [{
       component: blogs
     },
     {
-      path: '/comments'
+      path: '/comments',
+      component: comments
     },
     {
-      path: '/newBlog'
+      path: '/newBlog',
+      comments: editBlog
     }
   ]
 }
