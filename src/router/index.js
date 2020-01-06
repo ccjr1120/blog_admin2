@@ -9,6 +9,7 @@ const manage = () => import('../views/manage.vue')
 const blogs = () => import('../views/blogs.vue')
 const comments = () => import('../views/comments.vue')
 const editBlog = () => import("../views/editBlog.vue")
+
 const routes = [{
   path: ('/'),
   name: 'index',
@@ -43,7 +44,7 @@ const routes = [{
     },
     {
       path: '/newBlog',
-      comments: editBlog
+      component: editBlog
     }
   ]
 }
