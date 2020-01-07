@@ -9,6 +9,7 @@ const manage = () => import('../views/manage.vue')
 const blogs = () => import('../views/blogs.vue')
 const comments = () => import('../views/comments.vue')
 const editBlog = () => import("../views/editBlog.vue")
+const dataVisual = () => import('../views/dataVisualization.vue')
 
 const routes = [{
   path: ('/'),
@@ -34,6 +35,10 @@ const routes = [{
     requiresAuth: true
   },
   children: [
+    {
+      path: '/manage',
+      component: dataVisual
+    },
     {
       path: '/blogs',
       component: blogs
