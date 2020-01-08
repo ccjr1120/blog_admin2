@@ -50,7 +50,7 @@
 export default {
   data() {
     return {
-      currPage: "首页",
+      currPage: "首页·数据展示",
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
     };
@@ -59,7 +59,7 @@ export default {
   methods: {
     selectRouter(key) {
       if (key === "/manage") {
-        this.currPage = "首页";
+        this.currPage = "首页·数据展示";
       } else if (key === "/blogs") {
         this.currPage = "博客列表";
       } else if (key === "/comments") {
