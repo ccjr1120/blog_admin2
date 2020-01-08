@@ -4,9 +4,9 @@
       <el-row class="tac">
         <el-col style="width:100%" :span="12">
           <el-menu
-            default-active="2"
+            default-active="/manage"
             class="el-menu-vertical-demo"
-            background-color="#545c64"
+            background-color="rgb(50, 64, 87)"
             text-color="#fff"
             active-text-color="#ffd04b"
             router
@@ -76,18 +76,17 @@ export default {
 @import "../style/mixin";
 
 .el-header {
-  background-color: #b3c0d1;
+  background-color: #EFF2F7;
   color: #333;
   line-height: 60px;
 }
 
 .el-aside {
-  background-color: #545c64;
+  background-color: rgb(50, 64, 87);
   color: #333;
 }
 
 .el-main {
-  background-color: #e7edf3ef;
   color: #333;
   line-height: 40px;
 }
