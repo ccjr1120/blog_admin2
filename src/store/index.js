@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     //为了直接跳转到正在编写的界面，把登录默认值设置为true
-    isLogin: true
+    isLogin: false
   },
   mutations: {
     login(state){
