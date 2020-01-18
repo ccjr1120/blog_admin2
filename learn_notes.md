@@ -16,6 +16,7 @@ npm install -D less-loader less
 npm install mavon-editor --save
 npm install echerts --save
 npm install --save axios vue-axios
+npm install --save qs
 ```
 
 ## router
