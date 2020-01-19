@@ -44,7 +44,7 @@ export default {
       }
     };
   },
- created(){
+  created() {
     if (this.$store.state.isLogin) {
       this.$router.push("/manage");
     }
@@ -55,16 +55,26 @@ export default {
         if (valid) {
           var username = this.loginForm.username;
           var password = this.loginForm.password;
-          if (username == "admin" && password == "admin") {
-            this.$store.commit("login");
-            this.$router.push("/manage");
-            this.$message({
-              message: "登录成功",
-              type: "success"
+          this.$axios
+            .post("/admin/user/login", {
+              username: username,
+              password: password
+            })
+            .then(resp => {
+              if (resp.data.success) {
+                this.$store.commit("login");
+                this.$router.push("/manage");
+                this.$message({
+                  message: "登录成功",
+                  type: "success"
+                });
+              } else {
+                this.$message.error(resp.data.msg);
+              }
+            })
+            .catch(err => {
+              this.$message.error("登录出错," + err);
             });
-          } else {
-            this.$message.error("用户名或密码错误");
-          }
         } else {
           window.console.log("error submit!!");
           return false;

@@ -6,10 +6,11 @@ import store from './store'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import echarts from 'echarts'
+import axios from './plugins/axios'
 
-Vue.use(mavonEditor)
-Vue.use(echarts)
+Vue.use(mavonEditor, echarts, axios)
 Vue.prototype.$echarts = echarts
+Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 new Vue({
   router,
