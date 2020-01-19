@@ -72,7 +72,19 @@ example:
   }
 Using nested router to make nested view more convenient
 ```
-
+## axios
+```
+go to main.js import axios And add code "Vue.prototype.$axios = axios"   
+write the configuration of axios in the plugins/axios.   
+write axios request, example:      
+this.$axios.post("url", {param1: value})
+  .then(resp => {
+    alter(resp.data);
+  })
+  .catch(err => {
+    alter(err);
+});
+```
 ## vuex
 ```
 Go to store/index.js
