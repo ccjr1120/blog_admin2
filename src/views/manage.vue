@@ -65,12 +65,18 @@ export default {
   },
   created: function() {
     //验证是否已经登录
-    this.$axios.get("/admin/user/isLogin").then(resp => {
-      if (!resp.data.data) {
+    this.$axios
+      .get("/admin/user/isLogin")
+      .then(resp => {
+        if (!resp.data.data) {
+          this.$store.commit("logout");
+          this.$router.push("/login");
+        }
+      })
+      .catch(() => {
         this.$store.commit("logout");
         this.$router.push("/login");
-      }
-    });
+      });
   },
   methods: {
     selectRouter(key) {
@@ -85,11 +91,17 @@ export default {
       }
     },
     logout() {
-      this.popoverVisible = false
-      this.$axios.get("/admin/user/logout").then(() => {
-        this.$store.commit("logout");
-        this.$router.push("/login");
-      });
+      this.popoverVisible = false;
+      this.$axios
+        .get("/admin/user/logout")
+        .then(() => {
+          this.$store.commit("logout");
+          this.$router.push("/login");
+        })
+        .catch(() => {
+          this.$store.commit("logout");
+          this.$router.push("/login");
+        });
     }
   }
 };
