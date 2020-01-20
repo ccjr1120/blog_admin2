@@ -45,6 +45,13 @@ export default {
     };
   },
   created() {
+    //验证是否已经登录
+    this.$axios.get("/admin/user/isLogin").then(resp => {
+      if (resp.data.data) {
+        this.$store.commit("login");
+        this.$router.push("/manage");
+      }
+    });
     if (this.$store.state.isLogin) {
       this.$router.push("/manage");
     }

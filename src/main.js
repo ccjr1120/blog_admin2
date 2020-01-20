@@ -12,6 +12,7 @@ Vue.use(mavonEditor, echarts, axios)
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
+
 new Vue({
   router,
   store,

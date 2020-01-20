@@ -36,7 +36,14 @@
       <el-header height="56px">
         {{currPage}}
         <div style="float:right; margin-top:10px">
-          <el-avatar :size="40" :src="circleUrl"></el-avatar>
+          <el-popover placement="top" v-model="popoverVisible">
+            <div style="text-align: right; margin: 0;">
+              <el-button size="mini" type="text" @click="popoverVisible = false">个人简介</el-button>
+              <br />
+              <el-button type="text" size="mini" @click="logout">注销</el-button>
+            </div>
+            <el-avatar slot="reference" :size="40" :src="circleUrl"></el-avatar>
+          </el-popover>
         </div>
       </el-header>
       <el-main>
@@ -51,11 +58,20 @@ export default {
   data() {
     return {
       currPage: "首页·数据展示",
+      popoverVisible: false,
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
     };
   },
-
+  created: function() {
+    //验证是否已经登录
+    this.$axios.get("/admin/user/isLogin").then(resp => {
+      if (!resp.data.data) {
+        this.$store.commit("logout");
+        this.$router.push("/login");
+      }
+    });
+  },
   methods: {
     selectRouter(key) {
       if (key === "/manage") {
@@ -67,6 +83,13 @@ export default {
       } else if (key === "/newBlog") {
         this.currPage = "新建博客";
       }
+    },
+    logout() {
+      this.popoverVisible = false
+      this.$axios.get("/admin/user/logout").then(() => {
+        this.$store.commit("logout");
+        this.$router.push("/login");
+      });
     }
   }
 };
@@ -76,7 +99,7 @@ export default {
 @import "../style/mixin";
 
 .el-header {
-  background-color: #EFF2F7;
+  background-color: #eff2f7;
   color: #333;
   line-height: 60px;
 }
