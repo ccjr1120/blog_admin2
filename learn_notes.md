@@ -17,6 +17,7 @@ npm install mavon-editor --save
 npm install echerts --save
 npm install --save axios vue-axios
 npm install --save qs
+npm install vuex-along --save
 ```
 
 ## router
@@ -110,7 +111,12 @@ this.$store.commit("login") //Execute the function in the script to change the v
 
 Refresh will lose data in vuex
 ```
-
+## vuex-along
+```
+Automatically restore vuex state after refreshing the page
+how use?
+import it in the store/index.js and add it in the plugins
+```
 ## mavon-editor
 ```
  It is a markdown editor.
