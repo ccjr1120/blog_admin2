@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createVuexAlong from 'vuex-along'
 
 Vue.use(Vuex)
 
@@ -16,10 +17,7 @@ const store = new Vuex.Store({
       state.isLogin = false;
     }
   },
-  actions: {
-  },
-  modules: {
-  }
+  plugins:[createVuexAlong()]
 })
 
 export default store
