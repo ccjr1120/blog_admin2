@@ -7,17 +7,17 @@
         </el-col>
         <el-col :span="4">
           <div class="grid-content bg-purple-light">
-            <span style="font-size:20px;font-weight:bold;">121</span>新增访问
+            <span style="font-size:20px;font-weight:bold;">{{dailyVisitData[0]}}</span>新增访问
           </div>
         </el-col>
         <el-col :span="4">
           <div class="grid-content bg-purple-light">
-            <span style="font-size:20px;font-weight:bold;">15</span>新增评论
+            <span style="font-size:20px;font-weight:bold;">{{dailyVisitData[1]}}</span>新增评论
           </div>
         </el-col>
         <el-col :span="4">
           <div class="grid-content bg-purple-light">
-            <span style="font-size:20px;font-weight:bold;">14</span>新增Star
+            <span style="font-size:20px;font-weight:bold;">{{dailyVisitData[2]}}</span>新增Star
           </div>
         </el-col>
       </el-row>
@@ -27,17 +27,17 @@
         </el-col>
         <el-col :span="4">
           <div class="grid-content bg-purple-light">
-            <span style="font-size:20px;font-weight:bold;">321</span>访问量
+            <span style="font-size:20px;font-weight:bold;">{{allVisitData[0]}}</span>访问量
           </div>
         </el-col>
         <el-col :span="4">
           <div class="grid-content bg-purple-light">
-            <span style="font-size:20px;font-weight:bold;">45</span>评论数
+            <span style="font-size:20px;font-weight:bold;">{{allVisitData[1]}}</span>评论数
           </div>
         </el-col>
         <el-col :span="4">
           <div class="grid-content bg-purple-light">
-            <span style="font-size:20px;font-weight:bold;">72</span>Star
+            <span style="font-size:20px;font-weight:bold;">{{allVisitData[2]}}</span>Star
           </div>
         </el-col>
       </el-row>
@@ -48,8 +48,62 @@
 
 <script>
 export default {
+  data() {
+    return {
+      dailyVisitData: [0, 0, 0],
+      allVisitData: [0, 0, 0],
+      dateList: [
+        "星期一",
+        "星期二",
+        "星期三",
+        "星期四",
+        "星期五",
+        "星期六",
+        "星期日"
+      ],
+      visitsList: [0, 0, 0, 0, 0, 0, 0],
+      commentsList: [0, 0, 0, 0, 0, 0, 0],
+      starsList: [0, 0, 0, 0, 0, 0, 0]
+    };
+  },
+  created: function() {
+    //请求每日数据
+    this.$axios.get("/admin/visitData/dailyData").then(resp => {
+      if (resp.data.success) {
+        var data = resp.data.data;
+        this.dailyVisitData = [data.visits, data.comments, data.stars];
+      }
+    });
+    //获取总数据
+    this.$axios.get("/admin/visitData/allData").then(resp => {
+      if (resp.data.success) {
+        var data = resp.data.data;
+        this.allVisitData = [data.visits, data.comments, data.stars];
+      }
+    });
+  },
   mounted() {
-    this.drawLine();
+    //获取历史七天数据,为了使趋势图等待获取数据后刷新，故写在挂载函数里
+    this.$axios.get("/admin/visitData/sevenDaysData").then(resp => {
+      if (resp.data.success) {
+        var data = resp.data.data;
+        var dateList = [];
+        var visitsList = [];
+        var commentsList = [];
+        var starsList = [];
+        for (var i = 0; i < 7; i++) {
+          dateList.push(data[i].date);
+          visitsList.push(data[i].visits);
+          commentsList.push(data[i].comments);
+          starsList.push(data[i].stars);
+        }
+        this.dateList = dateList;
+        this.visitsList = visitsList;
+        this.commentsList = commentsList;
+        this.starsList = starsList;
+        this.drawLine();
+      }
+    });
   },
   methods: {
     drawLine() {
@@ -58,7 +112,7 @@ export default {
       // 绘制图表
       myChart.setOption({
         title: {
-          text: "流量趋势图"
+          text: "流量趋势图·历史七天"
         },
         tooltip: {
           trigger: "axis"
@@ -80,7 +134,7 @@ export default {
         xAxis: {
           type: "category",
           boundaryGap: false,
-          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+          data: this.dateList
         },
         yAxis: {
           type: "value"
@@ -89,20 +143,17 @@ export default {
           {
             name: "访问量",
             type: "line",
-            stack: "总量",
-            data: [120, 132, 101, 134, 90, 230, 210]
+            data: this.visitsList
           },
           {
             name: "评论数",
             type: "line",
-            stack: "总量",
-            data: [220, 182, 191, 234, 290, 330, 310]
+            data: this.commentsList
           },
           {
             name: "Star",
             type: "line",
-            stack: "总量",
-            data: [150, 232, 201, 154, 190, 330, 410]
+            data: this.starsList
           }
         ]
       });
