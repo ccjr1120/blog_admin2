@@ -23,11 +23,13 @@
               </template>
               <el-menu-item-group>
                 <el-submenu index="1-4">
-                  <template slot="title">按分组查看</template>
+                  <template slot="title">分组查看</template>
                   <el-menu-item
-                    @click="alterCategory('example group1')"
-                    index="/blogs/category"
-                  >example group1</el-menu-item>
+                    v-for="category in categoryList"
+                    :key="category.label"
+                    @click="alterCategory(category.substring(16))"
+                    :index="category"
+                  >{{category.substring(16)}}</el-menu-item>
                 </el-submenu>
                 <el-menu-item @click="alterCategory(null)" index="/blogs">全部文章</el-menu-item>
               </el-menu-item-group>
@@ -71,6 +73,7 @@ export default {
     return {
       currPage: "首页·数据展示",
       popoverVisible: false,
+      categoryList: [],
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
     };
@@ -89,6 +92,17 @@ export default {
         this.$store.commit("logout");
         this.$router.push("/login");
       });
+    //获取分组列表
+    this.$axios.get("/common/categoryList").then(resp => {
+      var data = resp.data;
+      if (data.success) {
+        var categoryList = data.data;
+        for(var i in categoryList){
+          //为动态导航生成正确的router
+          this.categoryList.push("/blogs/category/" + categoryList[i])
+        }
+      }
+    });
   },
   methods: {
     selectRouter(key) {

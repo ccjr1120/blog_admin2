@@ -87,6 +87,7 @@ export default {
     this.$axios.get("/admin/visitData/sevenDaysData").then(resp => {
       if (resp.data.success) {
         var data = resp.data.data;
+        data.reverse();
         var dateList = [];
         var visitsList = [];
         var commentsList = [];
