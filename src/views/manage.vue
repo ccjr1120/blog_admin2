@@ -6,7 +6,7 @@
           <el-menu
             default-active="/manage"
             class="el-menu-vertical-demo"
-            background-color="rgb(50, 64, 87)"
+            background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
             router
@@ -16,10 +16,22 @@
               <i class="el-icon-menu"></i>
               <span slot="title">首页</span>
             </el-menu-item>
-            <el-menu-item index="/blogs">
-              <i class="el-icon-notebook-2"></i>
-              <span slot="title">文章列表</span>
-            </el-menu-item>
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-notebook-2"></i>
+                <span slot="title">文章列表</span>
+              </template>
+              <el-menu-item-group>
+                <el-submenu index="1-4">
+                  <template slot="title">按分组查看</template>
+                  <el-menu-item
+                    @click="alterCategory('example group1')"
+                    index="/blogs/category"
+                  >example group1</el-menu-item>
+                </el-submenu>
+                <el-menu-item @click="alterCategory(null)" index="/blogs">全部文章</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
             <el-menu-item index="/comments">
               <i class="el-icon-s-comment"></i>
               <span slot="title">评论列表</span>
@@ -102,6 +114,12 @@ export default {
           this.$store.commit("logout");
           this.$router.push("/login");
         });
+    },
+    alterCategory(name) {
+      if (name != null) {
+        this.currPage = "博客列表·" + name;
+      }
+      this.$store.commit("alterCategory", name);
     }
   }
 };
@@ -117,7 +135,7 @@ export default {
 }
 
 .el-aside {
-  background-color: rgb(50, 64, 87);
+  background-color: #545c64;
   color: #333;
 }
 
