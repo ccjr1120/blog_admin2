@@ -10,6 +10,7 @@
             text-color="#fff"
             active-text-color="#ffd04b"
             router
+            @open="open"
             @select="selectRouter"
           >
             <el-menu-item index="/manage">
@@ -22,7 +23,7 @@
                 <span slot="title">文章列表</span>
               </template>
               <el-menu-item-group>
-                <el-submenu index="1-4">
+                <el-submenu index="categoryList">
                   <template slot="title">分组查看</template>
                   <el-menu-item
                     v-for="category in categoryList"
@@ -92,17 +93,6 @@ export default {
         this.$store.commit("logout");
         this.$router.push("/login");
       });
-    //获取分组列表
-    this.$axios.get("/common/categoryList").then(resp => {
-      var data = resp.data;
-      if (data.success) {
-        var categoryList = data.data;
-        for(var i in categoryList){
-          //为动态导航生成正确的router
-          this.categoryList.push("/blogs/category/" + categoryList[i])
-        }
-      }
-    });
   },
   methods: {
     selectRouter(key) {
@@ -134,6 +124,22 @@ export default {
         this.currPage = "博客列表·" + name;
       }
       this.$store.commit("alterCategory", name);
+    },
+    open(key) {
+      //每次点击分组列表就从后天请求一下
+      if (key === "categoryList") {
+        this.categoryList = []
+        this.$axios.get("/common/categoryList").then(resp => {
+          var data = resp.data;
+          if (data.success) {
+            var categoryList = data.data;
+            for (var i in categoryList) {
+              //为动态导航生成正确的router
+              this.categoryList.push("/blogs/category/" + categoryList[i]);
+            }
+          }
+        });
+      }
     }
   }
 };
