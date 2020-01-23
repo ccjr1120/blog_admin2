@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" border style="width: 100%">
+  <el-table :data="blogList" border style="width: 100%">
     <el-table-column prop="bid" label="博客ID" width="180"></el-table-column>
     <el-table-column prop="category" label="分类" width="180"></el-table-column>
     <el-table-column prop="createDate" label="创建日期" width="180"></el-table-column>
@@ -17,7 +17,7 @@
 export default {
   data() {
     return {
-      tableData: [
+      blogList: [
         {
           bid: "1",
           category: "未分类",
@@ -43,17 +43,32 @@ export default {
         this.$axios.get("common/blogList/" + category).then(resp => {
           var data = resp.data;
           if (data.success) {
-            this.tableData = data.data;
+            this.blogList = data.data;
           }
         });
       } else {
         this.$axios.get("admin/blogList").then(resp => {
           var data = resp.data;
           if (data.success) {
-            this.tableData = data.data;
+            this.blogList = data.data;
           }
         });
       }
+    },
+    handleDelete(index, row) {
+      window.console.log(index);
+      var bid = row.bid;
+      this.$axios.delete("/admin/blog/" + bid).then(resp => {
+        if (resp.data.success) {
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          });
+          this.getBlogList();
+        } else {
+          this.$message.error("删除失败," + resp.data.code);
+        }
+      });
     }
   }
 };
