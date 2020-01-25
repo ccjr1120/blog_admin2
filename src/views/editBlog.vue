@@ -58,6 +58,12 @@ export default {
   },
   mounted() {
     this.dialogFormVisible = true;
+    this.$axios.get("/common/categoryList").then(resp => {
+      var data = resp.data;
+      if (data.success) {
+        this.categoryList = data.data;
+      }
+    });
   },
   methods: {
     saveBlogCache() {
